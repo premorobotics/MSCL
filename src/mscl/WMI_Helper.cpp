@@ -8,6 +8,7 @@
 #include "mscl/WMI_Helper.h"
 
 #include <comdef.h>
+#include <stdexcept>
 
 WMI_Helper::WMI_Helper(std::string wmi_namespace, std::string wmi_class) :
     m_wmi_namespace(wmi_namespace),
@@ -37,7 +38,7 @@ void WMI_Helper::connect()
     {
         //throw an exception, Program has failed.
         error << "Failed to initialize COM library. Error code = 0x" << std::hex << hres;
-        throw std::exception(error.str().c_str());
+        throw std::runtime_error(error.str().c_str());
     }
 
     // Step 2: --------------------------------------------------
@@ -66,7 +67,7 @@ void WMI_Helper::connect()
 
         //throw an exception, Program has failed.
         error << "Failed to initialize security. Error code = 0x" << std::hex << hres;
-        throw std::exception(error.str().c_str());
+        throw std::runtime_error(error.str().c_str());
     }
 
     // Step 3: ---------------------------------------------------
@@ -87,7 +88,7 @@ void WMI_Helper::connect()
 
         //throw an exception, Program has failed.
         error << "Failed to create IWbemLocator object. Error code = 0x" << std::hex << hres;
-        throw std::exception(error.str().c_str());
+        throw std::runtime_error(error.str().c_str());
     }
 
     // Step 4: -----------------------------------------------------
@@ -116,7 +117,7 @@ void WMI_Helper::connect()
 
         //throw an exception, program has failed
         error << "Could not connect to namespace " << m_wmi_namespace << ". Error code = 0x" << std::hex << hres;
-        throw std::exception(error.str().c_str());
+        throw std::runtime_error(error.str().c_str());
     }
 
     // Step 5: --------------------------------------------------
@@ -141,7 +142,7 @@ void WMI_Helper::connect()
 
         //throw an exception, Program has failed.
         error << "Could not set proxy blanket. Error code = 0x" << std::hex << hres;
-        throw std::exception(error.str().c_str());
+        throw std::runtime_error(error.str().c_str());
     }
 
     // Step 6: --------------------------------------------------
@@ -168,7 +169,7 @@ void WMI_Helper::connect()
 
         //throw an exception, Program has failed
         error << "Query: '" << query.str() << "' has failed. Error code = 0x" << std::hex << hres;
-        throw std::exception(error.str().c_str());
+        throw std::runtime_error(error.str().c_str());
     }
 
     // Cleanup
@@ -217,7 +218,7 @@ void WMI_Helper::requestThread(std::vector<std::string> valuesToGet)
             {
                 std::stringstream error;
                 error << "Failed to find value for " << valueName;
-                throw std::exception(error.str().c_str());
+                throw std::runtime_error(error.str().c_str());
             }
 
             //add to the map
