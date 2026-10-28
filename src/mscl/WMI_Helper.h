@@ -7,7 +7,7 @@
 #pragma once
 
 #define _WIN32_DCOM
-#include <Wbemidl.h>
+#include <wbemidl.h>
 
 #pragma comment(lib, "wbemuuid.lib")
 
